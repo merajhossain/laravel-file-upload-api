@@ -20,10 +20,10 @@ class FileController extends Controller
             $files = $request->file('files');
             foreach ($files as $file) {
                 $filename = $file->getClientOriginalName();
-                $path = $file->storeAs('uploads', $filename, 'local');
+                $path = $file->storeAs('/public/uploads', $filename, 'local');
                 File::create([
                     'name' => $filename,
-                    'path' => $path,
+                    'path' => str_replace('public', 'storage', $path),
                 ]);
             }
         } catch (\Exception $e) {
